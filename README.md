@@ -19,12 +19,12 @@ repo: https://github.com/awslabs/amazon-guardduty-tester/
 module "guard_duty_generator" {
     source = "git::https://github.com/ifunky/terraform-aws-guardduty-generator.git?ref=main"
 
-    cron_schedule        = "12345678-f15b-46f0-aa77-d928f254abcd"
+    cron_schedule        = cron(0 2 ? * SUN *)"  # Every 2 days
     dns_instance_id      = module.ec2_linux_vuln_ssh_password.id
     control_instance_id  = module.ec2_linux_vuln_with_admin.id
     bitcoin_instance_id  = module.ec2_linux_vuln_with_admin.id
     portscan_instance_id = module.ec2_linux_vuln_with_admin.id
-    portscan_target_ip   = "11.0,.0.0"
+    portscan_target_ip   = "11.0.2.45"
 }  
 
 ```

@@ -9,7 +9,7 @@ description: "Generate a GuardDuty DNSDataExfiltration finding"
 parameters:
 mainSteps:
 - action: aws:runShellScript
-  name: DNSDataExfiltration
+  name: runScript
   inputs:
     timeoutSeconds: '120'
     runCommand:
