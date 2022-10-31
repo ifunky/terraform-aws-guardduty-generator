@@ -1,0 +1,58 @@
+---
+# Name of this project
+name: terraform-aws-guardduty-generator
+title: Wiz AWS GuardDuty Finding Generator
+
+# Build Badges
+badges:
+  - name: "Wiz"
+    image: "https://img.shields.io/badge/Wiz%20Security-green"
+    url: "https://www.wiz.io/solutions/iac"
+  - name: "License"
+    image: "https://img.shields.io/badge/License-Apache%202.0-blue.svg"
+    url: "https://opensource.org/licenses/Apache-2.0"
+
+description: |-
+  This module is designed to generate a selection of AWS GuardDuty findings for incident reponse testing purposes.  The samples are based on the offical AWS GaurdDuty Tester
+  repo: https://github.com/awslabs/amazon-guardduty-tester/
+
+  ## GuardDuty Findings Generated
+  - Recon:EC2/Portscan (simulate internal recon and attempted lateral movement)
+  - Trojan:EC2/DNSDataExfiltration
+  - Backdoor:EC2/C&CActivity.B!DNS
+  - CryptoCurrency:EC2/BitcoinTool.B!DNS
+
+# How to use this project
+usage: |-
+  ```hcl
+  module "guard_duty_generator" {
+      source = "git::https://github.com/ifunky/terraform-aws-guardduty-generator.git?ref=main"
+
+      cron_schedule        = "12345678-f15b-46f0-aa77-d928f254abcd"
+      dns_instance_id      = module.ec2_linux_vuln_ssh_password.id
+      control_instance_id  = module.ec2_linux_vuln_with_admin.id
+      bitcoin_instance_id  = module.ec2_linux_vuln_with_admin.id
+      portscan_instance_id = module.ec2_linux_vuln_with_admin.id
+      portscan_target_ip   = "11.0,.0.0"
+  }  
+
+  ```
+  > NOTE: For ease of maintenance the above example uses the `main` branch but we recommend using a version number in your production code
+
+
+# Include output from terraform-module-inspect
+include:
+  - "docs/targets.md"
+  - "docs/metadata.md"
+
+# List of useful related projects/links
+related:
+  - name: "PolyDev"
+    description: "PolyDev repo and setup guide"
+    url: "https://github.com/ifunky/polydev"
+
+references:
+  - name: "GuardDuty Tester"
+    description: "AWS GuardDuty Tester Repo"
+    url: "https://github.com/awslabs/amazon-guardduty-tester/"
+

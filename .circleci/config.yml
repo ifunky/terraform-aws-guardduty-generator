@@ -1,0 +1,20 @@
+version: 2
+
+
+jobs:
+  build:
+    docker:
+      - image: ifunky/polydev:latest
+        environment:
+          AWS_DEFAULT_REGION: eu-west-1 
+    
+    working_directory: ~/terraform
+    steps:
+      - checkout:
+          path: ~/terraform
+      - run:
+          name: Validate
+          command: make validate
+      - run:
+          name: Security Scan
+          command: make wizscan WIZ_CLIENT_ID=${WIZCLI_ID} WIZ_CLIENT_SECRET=${WIZCLI_SECRET}
