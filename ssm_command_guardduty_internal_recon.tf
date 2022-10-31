@@ -1,13 +1,13 @@
 resource "aws_ssm_document" "guardduty_internal_recon_finding" {
-  name            = "GuardDuty-Generator-Bitcoin-Mining"
+  name            = "GuardDuty-Generator-Internal-Recon"
   document_format = "YAML"
   document_type   = "Command"
 
   content = <<DOC
 schemaVersion: "2.2"
-description: "Generate a GuardDuty CryptoCurrency:EC2/BitcoinTool.B!DNS finding"
+description: "Generate a GuardDuty Recon:EC2/Portscan finding"
 parameters:
-  Target_IP:
+  TargetIP:
     type: "String"
     description: "Target IP for port scan"
 mainSteps:
@@ -27,7 +27,7 @@ resource "aws_ssm_association" "guardduty_internal_recon_finding" {
   schedule_expression = var.cron_schedule
 
   parameters = {
-    TargetIP = "60"
+    TargetIP = var.portscan_target_ip
   }
 
   targets {
