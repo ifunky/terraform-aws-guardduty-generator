@@ -22,7 +22,7 @@ DOC
 }
 
 resource "aws_ssm_association" "guardduty_internal_recon_finding" {
-  name = aws_ssm_document.guardduty_dns_exfiltration_finding.name
+  name = aws_ssm_document.guardduty_internal_recon_finding.name
 
   schedule_expression = var.cron_schedule
 
