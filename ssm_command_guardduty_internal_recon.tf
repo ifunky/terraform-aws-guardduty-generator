@@ -8,8 +8,8 @@ schemaVersion: "2.2"
 description: "Generate a GuardDuty Recon:EC2/Portscan finding"
 parameters:
   TargetIP:
-    type: "String"
-    description: "Target IP for port scan"
+    type: String
+    description: "(Required) Target IP for port scan"
 mainSteps:
 - action: aws:runShellScript
   name: runScript
