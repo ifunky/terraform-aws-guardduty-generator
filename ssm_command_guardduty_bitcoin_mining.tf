@@ -19,7 +19,7 @@ DOC
 }
 
 resource "aws_ssm_association" "guardduty_bitcoin_mining_finding" {
-  name = aws_ssm_document.guardduty_dns_exfiltration_finding.name
+  name = aws_ssm_document.guardduty_bitcoin_mining_finding.name
 
   schedule_expression = var.cron_schedule
 

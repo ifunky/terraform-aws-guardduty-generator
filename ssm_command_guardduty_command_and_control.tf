@@ -18,7 +18,7 @@ DOC
 }
 
 resource "aws_ssm_association" "guardduty_command_and_control_finding" {
-  name = aws_ssm_document.guardduty_dns_exfiltration_finding.name
+  name = aws_ssm_document.guardduty_command_and_control_finding.name
 
   schedule_expression = var.cron_schedule
 
