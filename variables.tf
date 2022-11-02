@@ -10,6 +10,16 @@ variable "cron_schedule" {
     default     = "cron(0 2 ? * SUN *)"
 }
 
+variable "ssh_bruteforce_target_ip" {
+    type        = string
+    description = "Instance ID to target a portscan generating a `UnauthorizedAccess:EC2/SSHBruteForce` finding"
+}
+
+variable "rdp_bruteforce_target_ip" {
+    type        = string
+    description = "Instance ID to target a portscan generating a `UnauthorizedAccess:EC2/RDPBruteForce` finding"
+}
+
 variable "dns_instance_id" {
     type        = string
     description = "Instance ID to generate `EC2/DNSDataExfiltration` findings"
@@ -33,4 +43,9 @@ variable "portscan_instance_id" {
 variable "portscan_target_ip" {
     type        = string
     description = "Instance ID to target a portscan generating a `Recon:EC2/Portscan` finding"
+}
+
+variable "redteam_instance_id" {
+    type        = string
+    description = "Redteam tooling instance ID."
 }

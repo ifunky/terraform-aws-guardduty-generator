@@ -11,6 +11,19 @@ repo: https://github.com/awslabs/amazon-guardduty-tester/
 - Trojan:EC2/DNSDataExfiltration
 - Backdoor:EC2/C&CActivity.B!DNS
 - CryptoCurrency:EC2/BitcoinTool.B!DNS
+- UnauthorizedAccess:EC2/RDPBruteForce
+- UnauthorizedAccess:EC2/SSHBruteForce
+
+## Prerequisites
+
+### AWS Systems Manager Configuration  
+This solutions uses AWS Systems Manager so you will need to configure the relevant accounts as per the AWS documentation: https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-setup.html
+
+### Red Team EC2 Instance
+An EC2 istance used for red team activity with the following utilities installed:
+- Nmap 
+- Crowbar
+- SSB
 
 
 
@@ -19,12 +32,15 @@ repo: https://github.com/awslabs/amazon-guardduty-tester/
 module "guard_duty_generator" {
     source = "git::https://github.com/ifunky/terraform-aws-guardduty-generator.git?ref=main"
 
-    cron_schedule        = cron(0 2 ? * SUN *)"  # Every 2 days
-    dns_instance_id      = module.ec2_linux_vuln_ssh_password.id
-    control_instance_id  = module.ec2_linux_vuln_with_admin.id
-    bitcoin_instance_id  = module.ec2_linux_vuln_with_admin.id
-    portscan_instance_id = module.ec2_linux_vuln_with_admin.id
-    portscan_target_ip   = "11.0.2.45"
+    cron_schedule           = cron(0 2 ? * SUN *)"  # Every 2 days
+    dns_instance_id         = module.ec2_linux_vuln_ssh_password.id
+    control_instance_id     = module.ec2_linux_vuln_with_admin.id
+    bitcoin_instance_id     = module.ec2_linux_vuln_with_admin.id
+    portscan_instance_id    = module.ec2_linux_vuln_with_admin.id
+    portscan_target_ip      = "11.0.2.45"
+    rdp_bruteforce_instance = "52.1.2.3"
+    ssh_bruteforce_instance = "52.1.2.3"
+    redteam_instance_id     = module.ec2_redteam.id
 }  
 
 ```
@@ -60,14 +76,21 @@ Provider Requirements:
 * `dns_instance_id` (required): Instance ID to generate `EC2/DNSDataExfiltration` findings
 * `portscan_instance_id` (required): Instance ID to generate `Recon:EC2/Portscan` findings
 * `portscan_target_ip` (required): Instance ID to target a portscan generating a `Recon:EC2/Portscan` finding
+* `rdp_bruteforce_target_ip` (required): Instance ID to target a portscan generating a `UnauthorizedAccess:EC2/RDPBruteForce` finding
+* `redteam_instance_id` (required): Redteam tooling instance ID.
+* `ssh_bruteforce_target_ip` (required): Instance ID to target a portscan generating a `UnauthorizedAccess:EC2/SSHBruteForce` finding
 * `tags` (default `{}`): Additional tags (e.g. map('BusinessUnit`,`XYZ`)
 
 ## Managed Resources
 * `aws_ssm_association.guardduty_bitcoin_mining_finding` from `aws`
+* `aws_ssm_association.guardduty_brutforce_rdp_finding` from `aws`
+* `aws_ssm_association.guardduty_brutforce_ssh_finding` from `aws`
 * `aws_ssm_association.guardduty_command_and_control_finding` from `aws`
 * `aws_ssm_association.guardduty_dns_exfiltration_finding` from `aws`
 * `aws_ssm_association.guardduty_internal_recon_finding` from `aws`
 * `aws_ssm_document.guardduty_bitcoin_mining_finding` from `aws`
+* `aws_ssm_document.guardduty_brutforce_rdp_finding` from `aws`
+* `aws_ssm_document.guardduty_brutforce_ssh_finding` from `aws`
 * `aws_ssm_document.guardduty_command_and_control_finding` from `aws`
 * `aws_ssm_document.guardduty_dns_exfiltration_finding` from `aws`
 * `aws_ssm_document.guardduty_internal_recon_finding` from `aws`

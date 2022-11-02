@@ -13,14 +13,21 @@ Provider Requirements:
 * `dns_instance_id` (required): Instance ID to generate `EC2/DNSDataExfiltration` findings
 * `portscan_instance_id` (required): Instance ID to generate `Recon:EC2/Portscan` findings
 * `portscan_target_ip` (required): Instance ID to target a portscan generating a `Recon:EC2/Portscan` finding
+* `rdp_bruteforce_target_ip` (required): Instance ID to target a portscan generating a `UnauthorizedAccess:EC2/RDPBruteForce` finding
+* `redteam_instance_id` (required): Redteam tooling instance ID.
+* `ssh_bruteforce_target_ip` (required): Instance ID to target a portscan generating a `UnauthorizedAccess:EC2/SSHBruteForce` finding
 * `tags` (default `{}`): Additional tags (e.g. map('BusinessUnit`,`XYZ`)
 
 ## Managed Resources
 * `aws_ssm_association.guardduty_bitcoin_mining_finding` from `aws`
+* `aws_ssm_association.guardduty_brutforce_rdp_finding` from `aws`
+* `aws_ssm_association.guardduty_brutforce_ssh_finding` from `aws`
 * `aws_ssm_association.guardduty_command_and_control_finding` from `aws`
 * `aws_ssm_association.guardduty_dns_exfiltration_finding` from `aws`
 * `aws_ssm_association.guardduty_internal_recon_finding` from `aws`
 * `aws_ssm_document.guardduty_bitcoin_mining_finding` from `aws`
+* `aws_ssm_document.guardduty_brutforce_rdp_finding` from `aws`
+* `aws_ssm_document.guardduty_brutforce_ssh_finding` from `aws`
 * `aws_ssm_document.guardduty_command_and_control_finding` from `aws`
 * `aws_ssm_document.guardduty_dns_exfiltration_finding` from `aws`
 * `aws_ssm_document.guardduty_internal_recon_finding` from `aws`

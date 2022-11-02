@@ -32,7 +32,7 @@ resource "aws_ssm_association" "guardduty_internal_recon_finding" {
 
   targets {
     key    = "InstanceIds"
-    values = [var.bitcoin_instance_id]
+    values = [var.redteam_instance_id]
   }
 
 }
